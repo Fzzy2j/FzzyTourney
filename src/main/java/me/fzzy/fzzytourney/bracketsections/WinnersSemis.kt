@@ -6,34 +6,33 @@ import me.fzzy.fzzytourney.TourneyApp
 
 object WinnersSemis {
 
-    private val values = hashMapOf<String, PlayerValues>()
+    val names = arrayListOf<PlayerValues>()
+    val wins = arrayListOf<PlayerValues>()
 
-    val player1 get() = values["Winners Semis 1"]!!
-    val player1Wins get() = values["Winners Semis 1 Wins"]!!
+    val player1 get() = names[0]
+    val player1Wins get() = wins[0]
 
-    val player2 get() = values["Winners Semis 2"]!!
-    val player2Wins get() = values["Winners Semis 2 Wins"]!!
+    val player2 get() = names[1]
+    val player2Wins get() = wins[1]
 
-    val player3 get() = values["Winners Semis 3"]!!
-    val player3Wins get() = values["Winners Semis 3 Wins"]!!
+    val player3 get() = names[2]
+    val player3Wins get() = wins[2]
 
-    val player4 get() = values["Winners Semis 4"]!!
-    val player4Wins get() = values["Winners Semis 4 Wins"]!!
-
-    val all get() = values.values
+    val player4 get() = names[3]
+    val player4Wins get() = wins[3]
 
     init {
-        values["Winners Semis 1"] = PlayerValues(80.0, 78.0, TourneyApp.bracketNameSize, "Winners Semis 1")
-        values["Winners Semis 1 Wins"] = PlayerValues(285.0, 78.0, TourneyApp.bracketWinsSize, "Winners Semis 1 Wins").black()
+        names.add(PlayerValues(80.0, 78.0, TourneyApp.bracketNameSize, "Winners Semis 1"))
+        wins.add(PlayerValues(285.0, 78.0, TourneyApp.bracketWinsSize, "Winners Semis 1 Wins").wins())
 
-        values["Winners Semis 2"] = PlayerValues(80.0, 119.0, TourneyApp.bracketNameSize, "Winners Semis 2")
-        values["Winners Semis 2 Wins"] = PlayerValues(285.0, 119.0, TourneyApp.bracketWinsSize, "Winners Semis 2 Wins").black()
+        names.add(PlayerValues(80.0, 119.0, TourneyApp.bracketNameSize, "Winners Semis 2"))
+        wins.add(PlayerValues(285.0, 119.0, TourneyApp.bracketWinsSize, "Winners Semis 2 Wins").wins())
 
-        values["Winners Semis 3"] = PlayerValues(80.0, 187.0, TourneyApp.bracketNameSize, "Winners Semis 3")
-        values["Winners Semis 3 Wins"] = PlayerValues(285.0, 187.0, TourneyApp.bracketWinsSize, "Winners Semis 3 Wins").black()
+        names.add(PlayerValues(80.0, 187.0, TourneyApp.bracketNameSize, "Winners Semis 3"))
+        wins.add(PlayerValues(285.0, 187.0, TourneyApp.bracketWinsSize, "Winners Semis 3 Wins").wins())
 
-        values["Winners Semis 4"] = PlayerValues(80.0, 228.0, TourneyApp.bracketNameSize, "Winners Semis 4")
-        values["Winners Semis 4 Wins"] = PlayerValues(285.0, 228.0, TourneyApp.bracketWinsSize, "Winners Semis 4 Wins").black()
+        names.add(PlayerValues(80.0, 228.0, TourneyApp.bracketNameSize, "Winners Semis 4"))
+        wins.add(PlayerValues(285.0, 228.0, TourneyApp.bracketWinsSize, "Winners Semis 4 Wins").wins())
     }
 
 }
