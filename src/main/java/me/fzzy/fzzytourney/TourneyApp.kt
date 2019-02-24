@@ -24,9 +24,19 @@ class TourneyApp : Application() {
         val bracketNameSize = Pair(200.0, 35.0)
         val bracketWinsSize = Pair(35.0, 35.0)
 
+        lateinit var pane: Pane
+
         @JvmStatic
         fun main(args: Array<String>) {
             launch(TourneyApp::class.java)
+        }
+
+        fun applyChanges() {
+            for (child in pane.children) {
+                if (child is PlayerValues) {
+                    Files.write(File("data" + File.separator + child.name + ".txt").toPath(), Arrays.asList(child.text), Charset.forName("UTF-8"))
+                }
+            }
         }
     }
 
@@ -34,7 +44,7 @@ class TourneyApp : Application() {
         primaryStage?.title = "FzzyTourney v0.1"
         primaryStage?.isResizable = false
 
-        val pane = Pane()
+        pane = Pane()
         bgImage = Image(TourneyApp::class.java.getResourceAsStream("/brackettemplate.png"))
 
         pane.children.addAll(WinnersSemis.names)
@@ -61,13 +71,24 @@ class TourneyApp : Application() {
         applyButton.layoutY = bgImage.height - applyButton.prefHeight - 20
 
         applyButton.onAction = EventHandler {
+            applyChanges()
+        }
+        pane.children.addAll(applyButton)
+
+        val resetButton = Button("Reset")
+        resetButton.prefWidth = 100.0
+        resetButton.prefHeight = 50.0
+        resetButton.layoutX = bgImage.width - applyButton.prefWidth - resetButton.prefWidth - 40
+        resetButton.layoutY = bgImage.height - resetButton.prefHeight - 20
+
+        resetButton.onAction = EventHandler {
             for (child in pane.children) {
                 if (child is PlayerValues) {
-                    Files.write(File("data" + File.separator + child.name + ".txt").toPath(), Arrays.asList(child.text), Charset.forName("UTF-8"))
+                    child.resetToDefault()
                 }
             }
         }
-        pane.children.addAll(applyButton)
+        pane.children.addAll(resetButton)
 
         val scene = Scene(pane, bgImage.width, bgImage.height)
         pane.background = Background(BackgroundImage(bgImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT))
