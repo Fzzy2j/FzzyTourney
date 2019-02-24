@@ -15,11 +15,11 @@ object LosersFinals {
     val player2Wins get() = wins[1]
 
     init {
-        names.add(PlayerValues(1130.0, 325.0, TourneyApp.bracketNameSize, "Losers Finals 5"))
-        wins.add(PlayerValues(1335.0, 325.0, TourneyApp.bracketWinsSize, "Losers Finals 5 Wins").wins())
+        names.add(PlayerValues(1130.0, 325.0, TourneyApp.bracketNameSize, "Losers Finals 1"))
+        wins.add(PlayerValues(1335.0, 325.0, TourneyApp.bracketWinsSize, "Losers Finals 1 Wins").wins())
 
-        names.add(PlayerValues(1130.0, 367.0, TourneyApp.bracketNameSize, "Losers Finals 6"))
-        wins.add(PlayerValues(1335.0, 367.0, TourneyApp.bracketWinsSize, "Losers Finals 6 Wins").wins())
+        names.add(PlayerValues(1130.0, 367.0, TourneyApp.bracketNameSize, "Losers Finals 2"))
+        wins.add(PlayerValues(1335.0, 367.0, TourneyApp.bracketWinsSize, "Losers Finals 2 Wins").wins())
     }
 
 }

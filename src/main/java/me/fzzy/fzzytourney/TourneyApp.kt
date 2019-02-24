@@ -39,6 +39,14 @@ class TourneyApp : Application() {
                 }
             }
         }
+
+        fun resetToDefault() {
+            for (child in pane.children) {
+                if (child is PlayerValues) {
+                    child.resetToDefault()
+                }
+            }
+        }
     }
 
     override fun start(primaryStage: Stage?) {
@@ -83,13 +91,13 @@ class TourneyApp : Application() {
         resetButton.layoutY = bgImage.height - resetButton.prefHeight - 20
 
         resetButton.onAction = EventHandler {
-            for (child in pane.children) {
-                if (child is PlayerValues) {
-                    child.resetToDefault()
-                }
-            }
+            resetToDefault()
         }
         pane.children.addAll(resetButton)
+
+        if (!File("data").exists()) {
+            resetToDefault()
+        }
 
         val scene = Scene(pane, bgImage.width, bgImage.height)
         pane.background = Background(BackgroundImage(bgImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT))

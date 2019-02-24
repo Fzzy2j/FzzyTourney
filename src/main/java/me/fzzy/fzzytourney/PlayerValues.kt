@@ -14,7 +14,6 @@ class PlayerValues constructor(x: Double, y: Double, size: Coordinates, val name
 
     fun wins(): PlayerValues {
         this.style = "-fx-text-fill: black;"
-        this.text = "0"
         this.ogText = "0"
         return this
     }
