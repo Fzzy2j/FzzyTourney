@@ -4,10 +4,11 @@ import javafx.event.EventHandler
 import javafx.geometry.Pos
 import javafx.scene.control.TextField
 import javafx.scene.layout.Background
+import me.fzzy.fzzytourney.util.Coordinates
 import java.io.File
 import java.nio.file.Files
 
-class PlayerValues constructor(x: Double, y: Double, size: Pair<Double, Double>, val name: String) : TextField() {
+class PlayerValues constructor(x: Double, y: Double, size: Coordinates, val name: String) : TextField() {
 
     private var ogText = ""
 
@@ -26,8 +27,8 @@ class PlayerValues constructor(x: Double, y: Double, size: Pair<Double, Double>,
         this.style = "-fx-text-fill: white;"
         this.alignment = Pos.CENTER
         this.background = Background.EMPTY
-        this.prefWidth = size.first
-        this.prefHeight = size.second
+        this.prefWidth = size.x
+        this.prefHeight = size.y
         this.layoutX = x
         this.layoutY = y
 

@@ -2,13 +2,13 @@ package me.fzzy.fzzytourney
 
 import javafx.application.Application
 import javafx.event.EventHandler
-import javafx.geometry.Pos
 import javafx.scene.Scene
 import javafx.scene.control.Button
 import javafx.scene.image.Image
 import javafx.scene.layout.*
 import javafx.stage.Stage
 import me.fzzy.fzzytourney.bracketsections.*
+import me.fzzy.fzzytourney.util.Coordinates
 import java.io.File
 import java.nio.charset.Charset
 import java.nio.file.Files
@@ -21,8 +21,8 @@ class TourneyApp : Application() {
 
     companion object {
 
-        val bracketNameSize = Pair(200.0, 35.0)
-        val bracketWinsSize = Pair(35.0, 35.0)
+        val bracketNameSize = Coordinates(200.0, 35.0)
+        val bracketWinsSize = Coordinates(35.0, 35.0)
 
         lateinit var pane: Pane
 
@@ -33,6 +33,7 @@ class TourneyApp : Application() {
 
         fun applyChanges() {
             for (child in pane.children) {
+                File("data").mkdir()
                 if (child is PlayerValues) {
                     Files.write(File("data" + File.separator + child.name + ".txt").toPath(), Arrays.asList(child.text), Charset.forName("UTF-8"))
                 }
