@@ -3,6 +3,8 @@ package me.fzzy.fzzytourney.bracketsections
 import javafx.scene.layout.Pane
 import me.fzzy.fzzytourney.PlayerValues
 import me.fzzy.fzzytourney.TourneyApp
+import me.fzzy.fzzytourney.util.SetName
+import me.fzzy.fzzytourney.util.SmashGGApi
 
 object WinnersSemis {
 
@@ -33,6 +35,19 @@ object WinnersSemis {
 
         names.add(PlayerValues(80.0, 228.0, TourneyApp.bracketNameSize, "Winners Semis 4"))
         wins.add(PlayerValues(285.0, 228.0, TourneyApp.bracketWinsSize, "Winners Semis 4 Wins").wins())
+    }
+
+    fun update(api: SmashGGApi) {
+        val s = api.getSets(SetName.WINNERS_SEMIS).sortedBy { it.identifier }
+        player1.text = api.getEntrantName(s[0].entrant1SeedId)
+        player2.text = api.getEntrantName(s[0].entrant2SeedId)
+        player1Wins.text = s[0].entrant1Score.toString()
+        player2Wins.text = s[0].entrant2Score.toString()
+
+        player3.text = api.getEntrantName(s[1].entrant1SeedId)
+        player4.text = api.getEntrantName(s[1].entrant2SeedId)
+        player3Wins.text = s[1].entrant1Score.toString()
+        player4Wins.text = s[1].entrant2Score.toString()
     }
 
 }

@@ -2,6 +2,8 @@ package me.fzzy.fzzytourney.bracketsections
 
 import me.fzzy.fzzytourney.PlayerValues
 import me.fzzy.fzzytourney.TourneyApp
+import me.fzzy.fzzytourney.util.SetName
+import me.fzzy.fzzytourney.util.SmashGGApi
 
 object LosersFinals {
 
@@ -20,6 +22,14 @@ object LosersFinals {
 
         names.add(PlayerValues(1130.0, 367.0, TourneyApp.bracketNameSize, "Losers Finals 2"))
         wins.add(PlayerValues(1335.0, 367.0, TourneyApp.bracketWinsSize, "Losers Finals 2 Wins").wins())
+    }
+
+    fun update(api: SmashGGApi) {
+        val s = api.getSets(SetName.LOSERS_FINAL).sortedBy { it.identifier }
+        player1.text = api.getEntrantName(s[0].entrant1SeedId)
+        player2.text = api.getEntrantName(s[0].entrant2SeedId)
+        player1Wins.text = s[0].entrant1Score.toString()
+        player2Wins.text = s[0].entrant2Score.toString()
     }
 
 }

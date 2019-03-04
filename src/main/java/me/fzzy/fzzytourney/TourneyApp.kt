@@ -9,7 +9,13 @@ import javafx.scene.layout.*
 import javafx.stage.Stage
 import me.fzzy.fzzytourney.bracketsections.*
 import me.fzzy.fzzytourney.util.Coordinates
+import me.fzzy.fzzytourney.util.SmashGGApi
+import org.json.JSONObject
+import java.io.BufferedReader
 import java.io.File
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
 import java.nio.charset.Charset
 import java.nio.file.Files
 import java.util.*
@@ -80,7 +86,13 @@ class TourneyApp : Application() {
         applyButton.layoutY = bgImage.height - applyButton.prefHeight - 20
 
         applyButton.onAction = EventHandler {
-            applyChanges()
+            val api = SmashGGApi(924235)
+            GrandFinals.update(api)
+            LosersFinals.update(api)
+            WinnersFinals.update(api)
+            LosersSemis.update(api)
+            WinnersSemis.update(api)
+            Losers.update(api)
         }
         pane.children.addAll(applyButton)
 

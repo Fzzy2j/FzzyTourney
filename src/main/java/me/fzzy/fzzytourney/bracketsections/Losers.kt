@@ -2,6 +2,8 @@ package me.fzzy.fzzytourney.bracketsections
 
 import me.fzzy.fzzytourney.PlayerValues
 import me.fzzy.fzzytourney.TourneyApp
+import me.fzzy.fzzytourney.util.SetName
+import me.fzzy.fzzytourney.util.SmashGGApi
 
 object Losers {
 
@@ -56,6 +58,30 @@ object Losers {
 
         names.add(PlayerValues(430.0, 474.0, TourneyApp.bracketNameSize, "Losers 8"))
         wins.add(PlayerValues(635.0, 474.0, TourneyApp.bracketWinsSize, "Losers 8 Wins").wins())
+    }
+
+    fun update(api: SmashGGApi) {
+        val s1 = api.getSets(SetName.LOSERS_ROUND(api.totalLoserRounds)).sortedBy { it.identifier }
+        player1.text = api.getEntrantName(s1[0].entrant1SeedId)
+        player2.text = api.getEntrantName(s1[0].entrant2SeedId)
+        player1Wins.text = s1[0].entrant1Score.toString()
+        player2Wins.text = s1[0].entrant2Score.toString()
+
+        player3.text = api.getEntrantName(s1[1].entrant1SeedId)
+        player4.text = api.getEntrantName(s1[1].entrant2SeedId)
+        player3Wins.text = s1[1].entrant1Score.toString()
+        player4Wins.text = s1[1].entrant2Score.toString()
+
+        val s2 = api.getSets(SetName.LOSERS_QUARTER_FINAL).sortedBy { it.identifier }
+        player5.text = api.getEntrantName(s2[0].entrant1SeedId)
+        player6.text = api.getEntrantName(s2[0].entrant2SeedId)
+        player5Wins.text = s2[0].entrant1Score.toString()
+        player6Wins.text = s2[0].entrant2Score.toString()
+
+        player7.text = api.getEntrantName(s2[1].entrant1SeedId)
+        player8.text = api.getEntrantName(s2[1].entrant2SeedId)
+        player7Wins.text = s2[1].entrant1Score.toString()
+        player8Wins.text = s2[1].entrant2Score.toString()
     }
 
 }
