@@ -4,6 +4,8 @@ import javafx.application.Application
 import javafx.event.EventHandler
 import javafx.scene.Scene
 import javafx.scene.control.Button
+import javafx.scene.control.TextField
+import javafx.scene.control.ToggleButton
 import javafx.scene.image.Image
 import javafx.scene.layout.*
 import javafx.stage.Stage
@@ -29,6 +31,8 @@ class TourneyApp : Application() {
 
         val bracketNameSize = Coordinates(200.0, 35.0)
         val bracketWinsSize = Coordinates(35.0, 35.0)
+        lateinit var tourneyIdField: TextField
+        lateinit var autoToggle: ToggleButton
 
         lateinit var pane: Pane
 
@@ -53,6 +57,11 @@ class TourneyApp : Application() {
                 }
             }
         }
+    }
+
+    override fun stop() {
+        super.stop()
+        AutoFillThread.running = false
     }
 
     override fun start(primaryStage: Stage?) {
@@ -86,15 +95,9 @@ class TourneyApp : Application() {
         applyButton.layoutY = bgImage.height - applyButton.prefHeight - 20
 
         applyButton.onAction = EventHandler {
-            val api = SmashGGApi(924235)
-            GrandFinals.update(api)
-            LosersFinals.update(api)
-            WinnersFinals.update(api)
-            LosersSemis.update(api)
-            WinnersSemis.update(api)
-            Losers.update(api)
+            applyChanges()
         }
-        pane.children.addAll(applyButton)
+        pane.children.add(applyButton)
 
         val resetButton = Button("Reset")
         resetButton.prefWidth = 100.0
@@ -105,7 +108,20 @@ class TourneyApp : Application() {
         resetButton.onAction = EventHandler {
             resetToDefault()
         }
-        pane.children.addAll(resetButton)
+        pane.children.add(resetButton)
+
+        autoToggle = ToggleButton("AutoFill")
+        autoToggle.prefWidth = 100.0
+        autoToggle.prefHeight = 50.0
+        autoToggle.layoutX = bgImage.width - autoToggle.prefWidth - applyButton.prefWidth - resetButton.prefWidth - 60
+        autoToggle.layoutY = bgImage.height - autoToggle.prefHeight - 20
+        pane.children.add(autoToggle)
+
+        tourneyIdField = TextField()
+        tourneyIdField.prefWidth = 100.0
+        tourneyIdField.layoutX = bgImage.width - tourneyIdField.prefWidth - applyButton.prefWidth - resetButton.prefWidth - 60
+        tourneyIdField.layoutY = bgImage.height - autoToggle.prefHeight - 50
+        pane.children.add(tourneyIdField)
 
         if (!File("data").exists()) {
             resetToDefault()
@@ -115,5 +131,7 @@ class TourneyApp : Application() {
         pane.background = Background(BackgroundImage(bgImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT))
         primaryStage?.scene = scene
         primaryStage?.show()
+
+        AutoFillThread.start()
     }
 }

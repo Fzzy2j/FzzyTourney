@@ -7,12 +7,15 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 
-class SmashGGApi(id: Int) {
+class SmashGGApi {
 
-    private val url = URL("https://api.smash.gg/phase_group/$id?expand[]=sets&expand[]=seeds")
+    private fun url(): URL {
+        return URL("https://api.smash.gg/phase_group/$id?expand[]=sets&expand[]=seeds")
+    }
 
     private lateinit var json: JSONObject
     private val sets = arrayListOf<Set>()
+    var id: Int? = null
 
     var totalLoserRounds: Int = 0
         private set
@@ -22,23 +25,26 @@ class SmashGGApi(id: Int) {
     }
 
     fun refresh() {
-        totalLoserRounds = 0
-        val conn = url.openConnection() as HttpURLConnection
-        conn.requestMethod = "GET"
-        val rd = BufferedReader(InputStreamReader(conn.inputStream))
-        json = JSONObject(rd.readLine())
-        rd.close()
+        if (id != null) {
+            totalLoserRounds = 0
+            val conn = url().openConnection() as HttpURLConnection
+            conn.requestMethod = "GET"
+            val rd = BufferedReader(InputStreamReader(conn.inputStream))
+            json = JSONObject(rd.readLine())
+            rd.close()
 
-        val array = json.getJSONObject("entities").getJSONArray("sets")
-        for (i in 0 until array.count()) {
-            try {
-                val s = Set(this, array.getJSONObject(i))
-                sets.add(s)
-                if (s.fullRoundText.startsWith("Losers Round ")) {
-                    val roundN = s.fullRoundText.substring(s.fullRoundText.length - 1).toInt()
-                    if (roundN > totalLoserRounds) totalLoserRounds = roundN
+            val array = json.getJSONObject("entities").getJSONArray("sets")
+            sets.clear()
+            for (i in 0 until array.count()) {
+                try {
+                    val s = Set(this, array.getJSONObject(i))
+                    sets.add(s)
+                    if (s.fullRoundText.startsWith("Losers Round ")) {
+                        val roundN = s.fullRoundText.substring(s.fullRoundText.length - 1).toInt()
+                        if (roundN > totalLoserRounds) totalLoserRounds = roundN
+                    }
+                } catch (e: Exception) {
                 }
-            } catch (e: Exception) {
             }
         }
     }
