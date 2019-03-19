@@ -1,14 +1,14 @@
 package me.fzzy.fzzytourney.bracketsections
 
-import me.fzzy.fzzytourney.PlayerValues
+import me.fzzy.fzzytourney.ObsField
 import me.fzzy.fzzytourney.TourneyApp
 import me.fzzy.fzzytourney.util.SetName
 import me.fzzy.fzzytourney.util.SmashGGApi
 
 object Losers {
 
-    val names = arrayListOf<PlayerValues>()
-    val wins = arrayListOf<PlayerValues>()
+    val names = arrayListOf<ObsField>()
+    val wins = arrayListOf<ObsField>()
 
     val player1 get() = names[0]
     val player1Wins get() = wins[0]
@@ -35,29 +35,29 @@ object Losers {
     val player8Wins get() = wins[7]
 
     init {
-        names.add(PlayerValues(80.0, 325.0, TourneyApp.bracketNameSize, "Losers 1"))
-        wins.add(PlayerValues(285.0, 325.0, TourneyApp.bracketWinsSize, "Losers 1 Wins").wins())
+        names.add(ObsField(80.0, 325.0, TourneyApp.bracketNameSize, "Losers 1"))
+        wins.add(ObsField(285.0, 325.0, TourneyApp.bracketWinsSize, "Losers 1 Wins").wins())
 
-        names.add(PlayerValues(80.0, 367.0, TourneyApp.bracketNameSize, "Losers 2"))
-        wins.add(PlayerValues(285.0, 367.0, TourneyApp.bracketWinsSize, "Losers 2 Wins").wins())
+        names.add(ObsField(80.0, 367.0, TourneyApp.bracketNameSize, "Losers 2"))
+        wins.add(ObsField(285.0, 367.0, TourneyApp.bracketWinsSize, "Losers 2 Wins").wins())
 
-        names.add(PlayerValues(80.0, 433.0, TourneyApp.bracketNameSize, "Losers 3"))
-        wins.add(PlayerValues(285.0, 433.0, TourneyApp.bracketWinsSize, "Losers 3 Wins").wins())
+        names.add(ObsField(80.0, 433.0, TourneyApp.bracketNameSize, "Losers 3"))
+        wins.add(ObsField(285.0, 433.0, TourneyApp.bracketWinsSize, "Losers 3 Wins").wins())
 
-        names.add(PlayerValues(80.0, 474.0, TourneyApp.bracketNameSize, "Losers 4"))
-        wins.add(PlayerValues(285.0, 474.0, TourneyApp.bracketWinsSize, "Losers 4 Wins").wins())
+        names.add(ObsField(80.0, 474.0, TourneyApp.bracketNameSize, "Losers 4"))
+        wins.add(ObsField(285.0, 474.0, TourneyApp.bracketWinsSize, "Losers 4 Wins").wins())
 
-        names.add(PlayerValues(430.0, 325.0, TourneyApp.bracketNameSize, "Losers 5"))
-        wins.add(PlayerValues(635.0, 325.0, TourneyApp.bracketWinsSize, "Losers 5 Wins").wins())
+        names.add(ObsField(430.0, 325.0, TourneyApp.bracketNameSize, "Losers 5"))
+        wins.add(ObsField(635.0, 325.0, TourneyApp.bracketWinsSize, "Losers 5 Wins").wins())
 
-        names.add(PlayerValues(430.0, 367.0, TourneyApp.bracketNameSize, "Losers 6"))
-        wins.add(PlayerValues(635.0, 367.0, TourneyApp.bracketWinsSize, "Losers 6 Wins").wins())
+        names.add(ObsField(430.0, 367.0, TourneyApp.bracketNameSize, "Losers 6"))
+        wins.add(ObsField(635.0, 367.0, TourneyApp.bracketWinsSize, "Losers 6 Wins").wins())
 
-        names.add(PlayerValues(430.0, 433.0, TourneyApp.bracketNameSize, "Losers 7"))
-        wins.add(PlayerValues(635.0, 433.0, TourneyApp.bracketWinsSize, "Losers 7 Wins").wins())
+        names.add(ObsField(430.0, 433.0, TourneyApp.bracketNameSize, "Losers 7"))
+        wins.add(ObsField(635.0, 433.0, TourneyApp.bracketWinsSize, "Losers 7 Wins").wins())
 
-        names.add(PlayerValues(430.0, 474.0, TourneyApp.bracketNameSize, "Losers 8"))
-        wins.add(PlayerValues(635.0, 474.0, TourneyApp.bracketWinsSize, "Losers 8 Wins").wins())
+        names.add(ObsField(430.0, 474.0, TourneyApp.bracketNameSize, "Losers 8"))
+        wins.add(ObsField(635.0, 474.0, TourneyApp.bracketWinsSize, "Losers 8 Wins").wins())
     }
 
     fun update(api: SmashGGApi) {

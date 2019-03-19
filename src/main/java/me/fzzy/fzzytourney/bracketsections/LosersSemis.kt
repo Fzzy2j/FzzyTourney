@@ -1,14 +1,14 @@
 package me.fzzy.fzzytourney.bracketsections
 
-import me.fzzy.fzzytourney.PlayerValues
+import me.fzzy.fzzytourney.ObsField
 import me.fzzy.fzzytourney.TourneyApp
 import me.fzzy.fzzytourney.util.SetName
 import me.fzzy.fzzytourney.util.SmashGGApi
 
 object LosersSemis {
 
-    val names = arrayListOf<PlayerValues>()
-    val wins = arrayListOf<PlayerValues>()
+    val names = arrayListOf<ObsField>()
+    val wins = arrayListOf<ObsField>()
 
     val player1 get() = names[0]
     val player1Wins get() = wins[0]
@@ -17,11 +17,11 @@ object LosersSemis {
     val player2Wins get() = wins[1]
 
     init {
-        names.add(PlayerValues(780.0, 379.0, TourneyApp.bracketNameSize, "Losers Semis 1"))
-        wins.add(PlayerValues(985.0, 379.0, TourneyApp.bracketWinsSize, "Losers Semis 1 Wins").wins())
+        names.add(ObsField(780.0, 379.0, TourneyApp.bracketNameSize, "Losers Semis 1"))
+        wins.add(ObsField(985.0, 379.0, TourneyApp.bracketWinsSize, "Losers Semis 1 Wins").wins())
 
-        names.add(PlayerValues(780.0, 420.0, TourneyApp.bracketNameSize, "Losers Semis 2"))
-        wins.add(PlayerValues(985.0, 420.0, TourneyApp.bracketWinsSize, "Losers Semis 2 Wins").wins())
+        names.add(ObsField(780.0, 420.0, TourneyApp.bracketNameSize, "Losers Semis 2"))
+        wins.add(ObsField(985.0, 420.0, TourneyApp.bracketWinsSize, "Losers Semis 2 Wins").wins())
     }
 
     fun update(api: SmashGGApi) {

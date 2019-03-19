@@ -8,19 +8,15 @@ import javafx.scene.control.TextField
 import javafx.scene.control.ToggleButton
 import javafx.scene.image.Image
 import javafx.scene.layout.*
+import javafx.scene.paint.Color
 import javafx.stage.Stage
 import me.fzzy.fzzytourney.bracketsections.*
 import me.fzzy.fzzytourney.util.Coordinates
-import me.fzzy.fzzytourney.util.SmashGGApi
-import org.json.JSONObject
-import java.io.BufferedReader
 import java.io.File
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
 import java.nio.charset.Charset
 import java.nio.file.Files
 import java.util.*
+import kotlin.math.round
 
 class TourneyApp : Application() {
 
@@ -44,7 +40,7 @@ class TourneyApp : Application() {
         fun applyChanges() {
             for (child in pane.children) {
                 File("data").mkdir()
-                if (child is PlayerValues) {
+                if (child is ObsField) {
                     Files.write(File("data" + File.separator + child.name + ".txt").toPath(), Arrays.asList(child.text), Charset.forName("UTF-8"))
                 }
             }
@@ -52,7 +48,7 @@ class TourneyApp : Application() {
 
         fun resetToDefault() {
             for (child in pane.children) {
-                if (child is PlayerValues) {
+                if (child is ObsField) {
                     child.resetToDefault()
                 }
             }
@@ -87,6 +83,22 @@ class TourneyApp : Application() {
 
         pane.children.addAll(CurrentlyPlaying.names)
         pane.children.addAll(CurrentlyPlaying.wins)
+
+        val roundIndicator = ObsField(510.0, 43.0, Coordinates(430.0, 35.0), "Round Indicator")
+        roundIndicator.style = "-fx-text-fill: black;"
+        pane.children.add(roundIndicator)
+
+        val caster1 = ObsField(291.0, 568.0, Coordinates(147.0, 25.0), "Caster 1")
+        pane.children.add(caster1)
+
+        val caster1Tag = ObsField(291.0, 597.0, Coordinates(147.0, 25.0), "Caster 1 Tag")
+        pane.children.add(caster1Tag)
+
+        val caster2 = ObsField(525.0, 568.0, Coordinates(147.0, 25.0), "Caster 2")
+        pane.children.add(caster2)
+
+        val caster2Tag = ObsField(525.0, 597.0, Coordinates(147.0, 25.0), "Caster 2 Tag")
+        pane.children.add(caster2Tag)
 
         val applyButton = Button("Apply")
         applyButton.prefWidth = 100.0

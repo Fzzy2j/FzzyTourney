@@ -8,11 +8,11 @@ import me.fzzy.fzzytourney.util.Coordinates
 import java.io.File
 import java.nio.file.Files
 
-class PlayerValues constructor(x: Double, y: Double, size: Coordinates, val name: String) : TextField() {
+class ObsField constructor(x: Double, y: Double, size: Coordinates, val name: String) : TextField() {
 
     private var ogText = ""
 
-    fun wins(): PlayerValues {
+    fun wins(): ObsField {
         this.style = "-fx-text-fill: black;"
         this.ogText = "0"
         return this
