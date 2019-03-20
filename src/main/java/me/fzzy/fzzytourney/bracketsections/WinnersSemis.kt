@@ -1,52 +1,31 @@
 package me.fzzy.fzzytourney.bracketsections
 
 import me.fzzy.fzzytourney.ObsField
+import me.fzzy.fzzytourney.Sets
 import me.fzzy.fzzytourney.TourneyApp
 import me.fzzy.fzzytourney.util.SetName
 import me.fzzy.fzzytourney.util.SmashGGApi
 
 object WinnersSemis {
 
-    val names = arrayListOf<ObsField>()
-    val wins = arrayListOf<ObsField>()
+    fun init() {
+        val player1 = ObsField(80.0, 78.0, TourneyApp.bracketNameSize, "Winners Semis 1")
+        val player1Wins = ObsField(285.0, 78.0, TourneyApp.bracketWinsSize, "Winners Semis 1 Wins").setWinsValue()
+        val player2 = ObsField(80.0, 119.0, TourneyApp.bracketNameSize, "Winners Semis 2")
+        val player2Wins = ObsField(285.0, 119.0, TourneyApp.bracketWinsSize, "Winners Semis 2 Wins").setWinsValue()
 
-    val player1 get() = names[0]
-    val player1Wins get() = wins[0]
+        val identifier1 = ObsField(326.0, 98.0, TourneyApp.bracketWinsSize, "Winners Semis Identifier 1").onlyUppercase()
 
-    val player2 get() = names[1]
-    val player2Wins get() = wins[1]
+        Sets.addSet(Sets.TourneySet(player1, player1Wins, player2, player2Wins, identifier1))
 
-    val player3 get() = names[2]
-    val player3Wins get() = wins[2]
+        val player3 = ObsField(80.0, 187.0, TourneyApp.bracketNameSize, "Winners Semis 3")
+        val player3Wins = ObsField(285.0, 187.0, TourneyApp.bracketWinsSize, "Winners Semis 3 Wins").setWinsValue()
+        val player4 = ObsField(80.0, 228.0, TourneyApp.bracketNameSize, "Winners Semis 4")
+        val player4Wins = ObsField(285.0, 228.0, TourneyApp.bracketWinsSize, "Winners Semis 4 Wins").setWinsValue()
 
-    val player4 get() = names[3]
-    val player4Wins get() = wins[3]
+        val identifier2 = ObsField(326.0, 207.0, TourneyApp.bracketWinsSize, "Winners Semis Identifier 2").onlyUppercase()
 
-    init {
-        names.add(ObsField(80.0, 78.0, TourneyApp.bracketNameSize, "Winners Semis 1"))
-        wins.add(ObsField(285.0, 78.0, TourneyApp.bracketWinsSize, "Winners Semis 1 Wins").wins())
-
-        names.add(ObsField(80.0, 119.0, TourneyApp.bracketNameSize, "Winners Semis 2"))
-        wins.add(ObsField(285.0, 119.0, TourneyApp.bracketWinsSize, "Winners Semis 2 Wins").wins())
-
-        names.add(ObsField(80.0, 187.0, TourneyApp.bracketNameSize, "Winners Semis 3"))
-        wins.add(ObsField(285.0, 187.0, TourneyApp.bracketWinsSize, "Winners Semis 3 Wins").wins())
-
-        names.add(ObsField(80.0, 228.0, TourneyApp.bracketNameSize, "Winners Semis 4"))
-        wins.add(ObsField(285.0, 228.0, TourneyApp.bracketWinsSize, "Winners Semis 4 Wins").wins())
-    }
-
-    fun update(api: SmashGGApi) {
-        val s = api.getSets(SetName.WINNERS_SEMIS).sortedBy { it.identifier }
-        player1.text = api.getEntrantName(s[0].entrant1SeedId)
-        player2.text = api.getEntrantName(s[0].entrant2SeedId)
-        player1Wins.text = s[0].entrant1Score.toString()
-        player2Wins.text = s[0].entrant2Score.toString()
-
-        player3.text = api.getEntrantName(s[1].entrant1SeedId)
-        player4.text = api.getEntrantName(s[1].entrant2SeedId)
-        player3Wins.text = s[1].entrant1Score.toString()
-        player4Wins.text = s[1].entrant2Score.toString()
+        Sets.addSet(Sets.TourneySet(player3, player3Wins, player4, player4Wins, identifier2))
     }
 
 }

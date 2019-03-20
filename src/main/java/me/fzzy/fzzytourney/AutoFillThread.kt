@@ -1,6 +1,5 @@
 package me.fzzy.fzzytourney
 
-import me.fzzy.fzzytourney.bracketsections.*
 import me.fzzy.fzzytourney.util.SmashGGApi
 
 object AutoFillThread : Thread() {
@@ -13,14 +12,13 @@ object AutoFillThread : Thread() {
             if (TourneyApp.autoToggle.isSelected) {
                 api.id = TourneyApp.tourneyIdField.text.toInt()
                 api.refresh()
-                try {
-                    GrandFinals.update(api)
-                    LosersFinals.update(api)
-                    WinnersFinals.update(api)
-                    LosersSemis.update(api)
-                    WinnersSemis.update(api)
-                    Losers.update(api)
-                } catch (e: Exception) {
+                for (set in Sets.getSets()) {
+                    if (set.identifier == null || set.identifier.text.isEmpty()) continue
+                    val smashSet = api.getSet(set.identifier.text) ?: continue
+                    set.player1.text = api.getEntrantName(smashSet.entrant1SeedId)
+                    set.player1Wins.text = smashSet.entrant1Score.toString()
+                    set.player2.text = api.getEntrantName(smashSet.entrant2SeedId)
+                    set.player2Wins.text = smashSet.entrant2Score.toString()
                 }
             }
             Thread.sleep(5000)

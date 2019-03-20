@@ -12,10 +12,24 @@ class ObsField constructor(x: Double, y: Double, size: Coordinates, val name: St
 
     private var ogText = ""
 
-    fun wins(): ObsField {
+    fun setWinsValue(): ObsField {
         this.style = "-fx-text-fill: black;"
         this.ogText = "0"
         return this
+    }
+
+    private var uppercase = false
+
+    fun onlyUppercase(): ObsField {
+        uppercase = true
+        return this
+    }
+
+    override fun replaceText(start: Int, end: Int, text: String?) {
+        if (uppercase)
+            super.replaceText(start, end, text?.toUpperCase())
+        else
+            super.replaceText(start, end, text)
     }
 
     fun resetToDefault() {

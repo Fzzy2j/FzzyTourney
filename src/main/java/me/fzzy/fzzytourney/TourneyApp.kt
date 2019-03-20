@@ -67,24 +67,18 @@ class TourneyApp : Application() {
         pane = Pane()
         bgImage = Image(TourneyApp::class.java.getResourceAsStream("/brackettemplate.png"))
 
-        pane.children.addAll(WinnersSemis.names)
-        pane.children.addAll(Losers.names)
-        pane.children.addAll(WinnersFinals.names)
-        pane.children.addAll(GrandFinals.names)
-        pane.children.addAll(LosersSemis.names)
-        pane.children.addAll(LosersFinals.names)
+        WinnersSemis.init()
+        Losers.init()
+        WinnersFinals.init()
+        GrandFinals.init()
+        LosersSemis.init()
+        LosersFinals.init()
 
-        pane.children.addAll(WinnersSemis.wins)
-        pane.children.addAll(Losers.wins)
-        pane.children.addAll(WinnersFinals.wins)
-        pane.children.addAll(GrandFinals.wins)
-        pane.children.addAll(LosersSemis.wins)
-        pane.children.addAll(LosersFinals.wins)
+        CurrentlyPlaying.init()
 
-        pane.children.addAll(CurrentlyPlaying.names)
-        pane.children.addAll(CurrentlyPlaying.wins)
+        Sets.addSetsToPane(pane)
 
-        val roundIndicator = ObsField(510.0, 43.0, Coordinates(430.0, 35.0), "Round Indicator")
+        val roundIndicator = ObsField(510.0, 43.0, Coordinates(430.0, 35.0), "Round Indicator").onlyUppercase()
         roundIndicator.style = "-fx-text-fill: black;"
         pane.children.add(roundIndicator)
 

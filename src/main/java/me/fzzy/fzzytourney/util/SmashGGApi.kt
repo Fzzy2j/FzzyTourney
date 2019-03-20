@@ -14,7 +14,7 @@ class SmashGGApi {
     }
 
     private lateinit var json: JSONObject
-    private val sets = arrayListOf<Set>()
+    private val sets = hashMapOf<String, SmashGGSet>()
     var id: Int? = null
 
     var totalLoserRounds: Int = 0
@@ -37,8 +37,8 @@ class SmashGGApi {
             sets.clear()
             for (i in 0 until array.count()) {
                 try {
-                    val s = Set(this, array.getJSONObject(i))
-                    sets.add(s)
+                    val s = SmashGGSet(this, array.getJSONObject(i))
+                    sets[s.identifier] = s
                     if (s.fullRoundText.startsWith("Losers Round ")) {
                         val roundN = s.fullRoundText.substring(s.fullRoundText.length - 1).toInt()
                         if (roundN > totalLoserRounds) totalLoserRounds = roundN
@@ -49,10 +49,14 @@ class SmashGGApi {
         }
     }
 
-    fun getSets(fullRoundText: String): ArrayList<Set> {
-        val setList = arrayListOf<Set>()
-        setList.addAll(sets.filter { set -> set.fullRoundText == fullRoundText })
+    fun getSets(fullRoundText: String): ArrayList<SmashGGSet> {
+        val setList = arrayListOf<SmashGGSet>()
+        setList.addAll(sets.filter { set -> set.value.fullRoundText == fullRoundText }.values)
         return setList
+    }
+
+    fun getSet(identifier: String): SmashGGSet? {
+        return sets[identifier.toUpperCase()]
     }
 
     fun getEntrantName(seedId: Long?): String {
@@ -67,7 +71,7 @@ class SmashGGApi {
         return ""
     }
 
-    class Set constructor(api: SmashGGApi, json: JSONObject) {
+    class SmashGGSet constructor(api: SmashGGApi, json: JSONObject) {
         var fullRoundText = json.getString("fullRoundText")
         var entrant1Score = json.getInt("entrant1Score")
         var entrant2Score = json.getInt("entrant2Score")
