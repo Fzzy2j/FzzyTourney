@@ -1,5 +1,8 @@
 package me.fzzy.fzzytourney
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.google.gson.stream.JsonReader
 import javafx.application.Application
 import javafx.event.EventHandler
 import javafx.scene.Scene
@@ -7,12 +10,16 @@ import javafx.scene.control.Button
 import javafx.scene.control.TextField
 import javafx.scene.control.ToggleButton
 import javafx.scene.image.Image
+import javafx.scene.input.KeyCode
 import javafx.scene.layout.*
 import javafx.scene.paint.Color
 import javafx.stage.Stage
 import me.fzzy.fzzytourney.bracketsections.*
 import me.fzzy.fzzytourney.util.Coordinates
+import java.io.BufferedWriter
 import java.io.File
+import java.io.FileWriter
+import java.io.InputStreamReader
 import java.nio.charset.Charset
 import java.nio.file.Files
 import java.util.*
@@ -27,22 +34,35 @@ class TourneyApp : Application() {
 
         val bracketNameSize = Coordinates(200.0, 35.0)
         val bracketWinsSize = Coordinates(35.0, 35.0)
-        lateinit var tourneyIdField: TextField
-        lateinit var autoToggle: ToggleButton
 
         lateinit var pane: Pane
 
+        val gson = Gson()
+        var names = arrayListOf<String>()
+
         @JvmStatic
         fun main(args: Array<String>) {
+            val namesFile = File("data${File.separator}cache${File.separator}names.json")
+            val token = object : TypeToken<ArrayList<String>>() {}.type
+            if (namesFile.exists())
+                names = gson.fromJson(JsonReader(InputStreamReader(namesFile.inputStream())), token)
+
             launch(TourneyApp::class.java)
         }
 
         fun applyChanges() {
             for (child in pane.children) {
-                File("data").mkdir()
+                File("data${File.separator}cache").mkdirs()
                 if (child is ObsField) {
                     Files.write(File("data" + File.separator + child.name + ".txt").toPath(), Arrays.asList(child.text), Charset.forName("UTF-8"))
+                    if (!child.isWinsValue && child.text.isNotBlank() && !names.contains(child.text)) names.add(child.text)
                 }
+
+                val namesFile = File("data${File.separator}cache${File.separator}names.json")
+                val bufferWriter = BufferedWriter(FileWriter(namesFile.absoluteFile, false))
+                val save = gson.toJson(names)
+                bufferWriter.write(save)
+                bufferWriter.close()
             }
         }
 
@@ -53,11 +73,6 @@ class TourneyApp : Application() {
                 }
             }
         }
-    }
-
-    override fun stop() {
-        super.stop()
-        AutoFillThread.running = false
     }
 
     override fun start(primaryStage: Stage?) {
@@ -73,6 +88,14 @@ class TourneyApp : Application() {
         GrandFinals.init()
         LosersSemis.init()
         LosersFinals.init()
+
+        pane.setOnKeyPressed { event ->
+            run {
+                if (event.code == KeyCode.KP_UP) {
+
+                }
+            }
+        }
 
         CurrentlyPlaying.init()
 
@@ -116,19 +139,6 @@ class TourneyApp : Application() {
         }
         pane.children.add(resetButton)
 
-        autoToggle = ToggleButton("AutoFill")
-        autoToggle.prefWidth = 100.0
-        autoToggle.prefHeight = 50.0
-        autoToggle.layoutX = bgImage.width - autoToggle.prefWidth - applyButton.prefWidth - resetButton.prefWidth - 60
-        autoToggle.layoutY = bgImage.height - autoToggle.prefHeight - 20
-        pane.children.add(autoToggle)
-
-        tourneyIdField = TextField()
-        tourneyIdField.prefWidth = 100.0
-        tourneyIdField.layoutX = bgImage.width - tourneyIdField.prefWidth - applyButton.prefWidth - resetButton.prefWidth - 60
-        tourneyIdField.layoutY = bgImage.height - autoToggle.prefHeight - 50
-        pane.children.add(tourneyIdField)
-
         if (!File("data").exists()) {
             resetToDefault()
         }
@@ -137,7 +147,5 @@ class TourneyApp : Application() {
         pane.background = Background(BackgroundImage(bgImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT))
         primaryStage?.scene = scene
         primaryStage?.show()
-
-        AutoFillThread.start()
     }
 }

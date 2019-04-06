@@ -4,7 +4,6 @@ import me.fzzy.fzzytourney.ObsField
 import me.fzzy.fzzytourney.Sets
 import me.fzzy.fzzytourney.TourneyApp
 import me.fzzy.fzzytourney.util.SetName
-import me.fzzy.fzzytourney.util.SmashGGApi
 
 object LosersSemis {
 
@@ -14,9 +13,7 @@ object LosersSemis {
         val player2 = ObsField(780.0, 420.0, TourneyApp.bracketNameSize, "Losers Semis 2")
         val player2Wins = ObsField(985.0, 420.0, TourneyApp.bracketWinsSize, "Losers Semis 2 Wins").setWinsValue()
 
-        val identifier = ObsField(1026.0, 399.0, TourneyApp.bracketWinsSize, "Losers Semis Identifier").onlyUppercase()
-
-        Sets.addSet(Sets.TourneySet(player1, player1Wins, player2, player2Wins, identifier))
+        Sets.addSet(Sets.TourneySet(player1, player1Wins, player2, player2Wins))
     }
 
 }

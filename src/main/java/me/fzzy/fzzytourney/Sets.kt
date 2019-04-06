@@ -13,14 +13,9 @@ object Sets {
     fun addSetsToPane(pane: Pane) {
         for (set in sets) {
             pane.children.add(set.player1)
-            pane.children.add(set.player2)
-        }
-        for (set in sets) {
             pane.children.add(set.player1Wins)
+            pane.children.add(set.player2)
             pane.children.add(set.player2Wins)
-        }
-        for (set in sets) {
-            if (set.identifier != null) pane.children.add(set.identifier)
         }
     }
 
@@ -28,6 +23,6 @@ object Sets {
         return sets
     }
 
-    class TourneySet constructor(val player1: ObsField, val player1Wins: ObsField, val player2: ObsField, val player2Wins: ObsField, val identifier: ObsField?)
+    class TourneySet constructor(val player1: ObsField, val player1Wins: ObsField, val player2: ObsField, val player2Wins: ObsField)
 
 }

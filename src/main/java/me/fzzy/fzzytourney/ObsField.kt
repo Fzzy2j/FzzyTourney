@@ -12,9 +12,12 @@ class ObsField constructor(x: Double, y: Double, size: Coordinates, val name: St
 
     private var ogText = ""
 
+    var isWinsValue = false
+
     fun setWinsValue(): ObsField {
         this.style = "-fx-text-fill: black;"
         this.ogText = "0"
+        isWinsValue = true
         return this
     }
 
@@ -25,11 +28,31 @@ class ObsField constructor(x: Double, y: Double, size: Coordinates, val name: St
         return this
     }
 
-    override fun replaceText(start: Int, end: Int, text: String?) {
+    override fun replaceText(start: Int, end: Int, ch: String?) {
         if (uppercase)
-            super.replaceText(start, end, text?.toUpperCase())
+            super.replaceText(start, end, ch?.toUpperCase())
         else
-            super.replaceText(start, end, text)
+            super.replaceText(start, end, ch)
+
+        if (ch.isNullOrBlank()) return
+
+        val caretPos = this.caretPosition
+
+        val textNoSelection = this.text.substring(0, this.selection.start) + this.text.substring(this.selection.end, this.text.length)
+        var name = ""
+        for (n in TourneyApp.names) {
+            if (n.startsWith(textNoSelection) && n != textNoSelection) {
+                name = n
+                break
+            }
+        }
+
+        if (name.isNotBlank()) this.text = name
+
+        if (name.isNotBlank()) {
+            this.positionCaret(caretPos)
+            this.selectNextWord()
+        }
     }
 
     fun resetToDefault() {
@@ -53,6 +76,8 @@ class ObsField constructor(x: Double, y: Double, size: Coordinates, val name: St
         }
         this.onAction = EventHandler {
             TourneyApp.applyChanges()
+            this.deselect()
+            this.positionCaret(this.text.length)
         }
     }
 
