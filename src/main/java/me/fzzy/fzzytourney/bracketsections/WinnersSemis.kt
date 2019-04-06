@@ -13,14 +13,14 @@ object WinnersSemis {
         val player2 = ObsField(80.0, 119.0, TourneyApp.bracketNameSize, "Winners Semis 2")
         val player2Wins = ObsField(285.0, 119.0, TourneyApp.bracketWinsSize, "Winners Semis 2 Wins").setWinsValue()
 
-        Sets.addSet(Sets.TourneySet(player1, player1Wins, player2, player2Wins))
+        Sets.addSet(Sets.TourneySet("Winners Semis", player1, player1Wins, player2, player2Wins))
 
         val player3 = ObsField(80.0, 187.0, TourneyApp.bracketNameSize, "Winners Semis 3")
         val player3Wins = ObsField(285.0, 187.0, TourneyApp.bracketWinsSize, "Winners Semis 3 Wins").setWinsValue()
         val player4 = ObsField(80.0, 228.0, TourneyApp.bracketNameSize, "Winners Semis 4")
         val player4Wins = ObsField(285.0, 228.0, TourneyApp.bracketWinsSize, "Winners Semis 4 Wins").setWinsValue()
 
-        Sets.addSet(Sets.TourneySet(player3, player3Wins, player4, player4Wins))
+        Sets.addSet(Sets.TourneySet("Winners Semis", player3, player3Wins, player4, player4Wins))
     }
 
 }

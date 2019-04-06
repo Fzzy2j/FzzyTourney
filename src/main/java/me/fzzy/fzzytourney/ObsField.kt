@@ -3,6 +3,7 @@ package me.fzzy.fzzytourney
 import javafx.event.EventHandler
 import javafx.geometry.Pos
 import javafx.scene.control.TextField
+import javafx.scene.input.KeyCode
 import javafx.scene.layout.Background
 import me.fzzy.fzzytourney.util.Coordinates
 import java.io.File
@@ -78,6 +79,20 @@ class ObsField constructor(x: Double, y: Double, size: Coordinates, val name: St
             TourneyApp.applyChanges()
             this.deselect()
             this.positionCaret(this.text.length)
+        }
+        this.setOnKeyPressed {
+            if (it.code == KeyCode.LEFT) {
+                val p1 = Sets.getSets("Currently Playing")[0].player1Wins
+                p1.text = (p1.text.toInt() + 1).toString()
+            }
+            if (it.code == KeyCode.RIGHT) {
+                val p2 = Sets.getSets("Currently Playing")[0].player2Wins
+                p2.text = (p2.text.toInt() + 1).toString()
+            }
+            if (it.code == KeyCode.DOWN) {
+                Sets.getSets("Currently Playing")[0].player1Wins.resetToDefault()
+                Sets.getSets("Currently Playing")[0].player2Wins.resetToDefault()
+            }
         }
     }
 

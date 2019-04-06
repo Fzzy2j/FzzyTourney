@@ -8,7 +8,7 @@ object CurrentlyPlaying {
         val player2 = ObsField(811.0, 0.0, TourneyApp.bracketNameSize, "Player 2")
         val player2Wins = ObsField(768.0, 0.0, TourneyApp.bracketWinsSize, "Player 2 Wins").setWinsValue()
 
-        Sets.addSet(Sets.TourneySet(player1, player1Wins, player2, player2Wins))
+        Sets.addSet(Sets.TourneySet("Currently Playing", player1, player1Wins, player2, player2Wins))
     }
 
 }

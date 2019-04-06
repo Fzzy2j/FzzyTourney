@@ -13,7 +13,7 @@ object LosersFinals {
         val player2 = ObsField(1130.0, 367.0, TourneyApp.bracketNameSize, "Losers Finals 2")
         val player2Wins = ObsField(1335.0, 367.0, TourneyApp.bracketWinsSize, "Losers Finals 2 Wins").setWinsValue()
 
-        Sets.addSet(Sets.TourneySet(player1, player1Wins, player2, player2Wins))
+        Sets.addSet(Sets.TourneySet("Losers Finals", player1, player1Wins, player2, player2Wins))
     }
 
 }

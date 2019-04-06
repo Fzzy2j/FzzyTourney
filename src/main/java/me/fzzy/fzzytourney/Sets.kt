@@ -23,6 +23,10 @@ object Sets {
         return sets
     }
 
-    class TourneySet constructor(val player1: ObsField, val player1Wins: ObsField, val player2: ObsField, val player2Wins: ObsField)
+    fun getSets(name: String): List<TourneySet> {
+        return sets.filter { set -> set.name == name }
+    }
+
+    class TourneySet constructor(val name: String, val player1: ObsField, val player1Wins: ObsField, val player2: ObsField, val player2Wins: ObsField)
 
 }
