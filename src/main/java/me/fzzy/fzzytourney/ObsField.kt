@@ -91,7 +91,9 @@ class ObsField constructor(x: Double, y: Double, size: Coordinates, val name: St
             }
             if (it.code == KeyCode.DOWN) {
                 Sets.getSets("Currently Playing")[0].player1Wins.resetToDefault()
+                Sets.getSets("Currently Playing")[0].player1.resetToDefault()
                 Sets.getSets("Currently Playing")[0].player2Wins.resetToDefault()
+                Sets.getSets("Currently Playing")[0].player2.resetToDefault()
             }
         }
     }
