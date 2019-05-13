@@ -4,9 +4,11 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import javafx.application.Application
+import javafx.collections.FXCollections
 import javafx.event.EventHandler
 import javafx.scene.Scene
 import javafx.scene.control.Button
+import javafx.scene.control.ComboBox
 import javafx.scene.control.TextField
 import javafx.scene.control.ToggleButton
 import javafx.scene.image.Image
@@ -75,7 +77,7 @@ class TourneyApp : Application() {
     }
 
     override fun start(primaryStage: Stage?) {
-        primaryStage?.title = "FzzyTourney v0.1"
+        primaryStage?.title = "FzzyTourney"
         primaryStage?.isResizable = false
 
         pane = Pane()
@@ -99,9 +101,7 @@ class TourneyApp : Application() {
             }
             if (it.code == KeyCode.DOWN) {
                 Sets.getSets("Currently Playing")[0].player1Wins.resetToDefault()
-                Sets.getSets("Currently Playing")[0].player1.resetToDefault()
                 Sets.getSets("Currently Playing")[0].player2Wins.resetToDefault()
-                Sets.getSets("Currently Playing")[0].player2.resetToDefault()
             }
         }
 
@@ -109,9 +109,9 @@ class TourneyApp : Application() {
 
         Sets.addSetsToPane(pane)
 
-        val roundIndicator = ObsField(510.0, 43.0, Coordinates(430.0, 35.0), "Round Indicator").onlyUppercase()
-        roundIndicator.style = "-fx-text-fill: black;"
-        pane.children.add(roundIndicator)
+        val options = FXCollections.observableArrayList("GRAND FINALS", "LOSERS FINALS", "WINNERS FINALS", "LOSERS SEMIS", "WINNERS SEMIS")
+        val matchIndicator = ObsDropdown(510.0, 43.0, Coordinates(430.0, 35.0),"Match Indicator", options)
+        pane.children.add(matchIndicator)
 
         val caster1 = ObsField(291.0, 568.0, Coordinates(147.0, 25.0), "Caster 1")
         pane.children.add(caster1)
